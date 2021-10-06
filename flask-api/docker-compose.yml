@@ -1,10 +1,23 @@
 version: "3"
 services:
   app:
-    container_name: flask-api
+    container_name: api
+    image: main
     build: .
     environment:
       FLASK_APP: app
       FLASK_ENV: development
     ports:
       - "8080:8080"
+  worker:
+    container_name: worker
+    image: main
+    command: rqworker --name worker --url redis://redis:6379/0 --verbose
+  rq-dashboard:
+    container_name: rq-dashboard
+    image: main
+    command: rq-dashboard --port 5555 --redis-url redis://redis:6379/0
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"

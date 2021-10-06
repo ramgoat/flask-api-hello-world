@@ -1,1 +1,4 @@
 Flask==2.0.1
+flask_rq2==18.3
+rq_dashboard==0.6.1
+redis==3.5.3

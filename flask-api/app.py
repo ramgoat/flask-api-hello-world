@@ -4,10 +4,16 @@ from init_redis_rq import rq
 from routes.main import blueprint_main
 from routes.fruits import blueprint_fruit
 
+def create_workers():
+    default_worker = rq.get_worker()
+    default_worker.work(burst=True)
+
 def create_app():
+    redis_url = 'redis://redis:6379/0'
     app = Flask(__name__)
     app.config["JSON_SORT_KEYS"] = False
-    #app.config["RQ_REDIS_URL"] = 'redis://localhost:6379/0'
+    app.config["RQ_REDIS_URL"] = redis_url
+    app.config["RQ_DASHBOARD_REDIS_URL"] = redis_url
     #app.config['RQ_QUEUES'] = ['default']
     app.config.from_object(rq_dashboard.default_settings)
 
@@ -21,5 +27,5 @@ def create_app():
     return app
 
 if __name__ == '__main__':
-    app = create_app()
+    app = create_app(threaded=True)
     app.run()

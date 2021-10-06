@@ -9,7 +9,9 @@ logger = getFileLogger(__name__, log_level='DEBUG')
 @rq.job
 def reverse(val):
     val_reversed = val[::-1]
-    logger.info(f"{val} --> {val_reversed}")
+    message = f"{val} --> {val_reversed}"
+    logger.info(message)
+    print(message)
     return val_reversed
 
 @blueprint_main.route('/<val>', methods=['GET'])
