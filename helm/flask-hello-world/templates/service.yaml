@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: {{.Values.application.name}}
   labels:
-    run: {{.Values.application.name}}
+    app: {{.Values.application.name}}
 spec:
   ports:
-  - port: 8080
+  - port: {{.Values.application.httpPort}}
+    targetPort: {{.Values.application.flaskPort}}
     protocol: TCP
   selector:
     app: {{.Values.application.name}}
-  type: LoadBalancer
