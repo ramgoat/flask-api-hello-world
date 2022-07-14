@@ -3,6 +3,7 @@ services:
   app:
     container_name: flask-api
     build: .
+    image: flask-hello-world
     environment:
       FLASK_APP: app
       FLASK_ENV: development
